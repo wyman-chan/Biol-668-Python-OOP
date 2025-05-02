@@ -64,6 +64,7 @@
 
 
 import re
+import doctest
 
 standard_code = {
      "UUU": "F", "UUC": "F", "UUA": "L", "UUG": "L", "UCU": "S",
@@ -90,7 +91,20 @@ aa_mol_weights={'A':89.09,'C':121.15,'D':133.1,'E':147.13,'F':165.19,
 
 
 class Seq:
+    """
+   A class to present a DNA sequence record. It can also break the sequence
+   into kmers. It will also present just the DNA sequence.
 
+   >>> record = Seq("ATGCGT", "geneX", "E.coli")
+   >>> print(record)
+   ATGCGT
+   >>> record.print_record()
+   E.coli geneX: ATGCGT
+   >>> record.make_kmers(3)
+   "['ATG', 'TGC', 'GCG', 'CGT']"
+   >>> record.fasta()
+   '>E.coli geneX\\nATGCGT'
+   """
     def __init__(self,sequence,gene,species, kmers=[]):
         self.sequence=sequence.upper().strip()
         self.gene=gene
@@ -113,8 +127,28 @@ class Seq:
     def fasta(self):
         return ">" + self.species + " " + self.gene + "\n" +self.sequence
     
+    
 class DNA(Seq):
+    """
+    A class for analyzing DNA sequences, inheriting from Seq. It will clean
+    the DNA sequence, print the metadata, find the reverse complement
+    strand, and returns 3 forward sequence frames and 3 reverse sequence
+    frames.
 
+    >>> dna = DNA("atgcncgta", "geneX", "E.coli", "XYZ123")
+    >>> dna.sequence
+    'ATGCNCGTA'
+    >>> dna.print_info()
+    'XYZ123 E.coli geneX: ATGCNCGTA'
+    >>> dna.analysis()
+    4
+    >>> dna.reverse_complement()
+    'TACGNGCAT'
+    >>> dna.six_frames()  # doctest: +NORMALIZE_WHITESPACE
+    ('ATGCNCGTA', 'TGCNCGTA', 'GCNCGTA',
+     'TACGNGCAT', 'ACGNGCAT', 'CGNGCAT')
+    """
+    
     def __init__(self,sequence,gene,species,geneid,**kwargs):
         super().__init__(sequence,gene,species)
         self.sequence = re.sub('[^ATGCU]','N',self.sequence)
@@ -154,18 +188,29 @@ class DNA(Seq):
             sixframes.append(frame)
         framessix=tuple(sixframes)
         return framessix
-        
-
+    
 
 class RNA(DNA):
+    """
+    A class to represent an RNA sequence, inherited from DNA.
 
+    >>> rna = RNA("ATGAAAGGG", "geneY", "E.coli", "ABC456")
+    >>> rna.sequence
+    'AUGAAAGGG'
+    >>> rna.print_info()
+    'ABC456 E.coli geneY: AUGAAAGGG'
+    >>> rna.make_codons()
+    ['AUG', 'AAA', 'GGG']
+    >>> rna.translate()
+    'MKG'
+    """
     def __init__(self, sequence, gene, species, geneid, codons = [], **kwargs):
         super().__init__(sequence, gene, species, geneid)
         self.sequence = self.sequence.replace("T", "U")
         self.codons = codons
         
     def print_info(self):
-        print(self.geneid + " " + self.species + " " + self.gene + ": " + self.sequence)
+        return(self.geneid + " " + self.species + " " + self.gene + ": " + self.sequence)
         
     def make_codons(self):
         for i in range(0,len(self.sequence), 3):
@@ -184,8 +229,19 @@ class RNA(DNA):
                 prot+=(standard_code[self.codons[i]])
         return prot
 
-class Protein(Seq):
 
+class Protein(Seq):
+    """
+    A class representing a protein sequence.
+
+    >>> p = Protein("MVHFTAEEKAAVTSLWSKM", "geneZ", "E.coli", "PRO123")
+    >>> hydro=round(p.total_hydro(), 2)
+    >>> print(hydro)
+    2.3
+    >>> weight=p.mol_weight()
+    >>> print(weight)
+    2490.8
+    """
     def __init__(self,sequence,gene,species,geneid,kmers=[], **kwargs):
         super().__init__(sequence,gene,species, kmers)
         self.sequence = re.sub('[^A-Za-z]','X',self.sequence)
@@ -203,11 +259,10 @@ class Protein(Seq):
             weight += aa_mol_weights[base]
         return weight
 
+
+if __name__=="__main__":
     
-
-x=DNA("g","tmp","m",000)
-print(x)
-
+    doctest.testmod(verbose=True)
 
 
 
