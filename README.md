@@ -3,7 +3,7 @@
 # Overview
 This project demonstrates the use of Object-Oriented Programming (OOP) in Python to model biological sequences, including DNA, RNA, and proteins. Through a series of classes, the code replicates basic bioinformatics functionality such as sequence formatting, k-mer generation, codon translation, reverse complementation, and computation of protein properties—all without using specialized libraries like Biopython.
 
-# Project Structure
+# Contents and Project Structure
 CHAN_OOP_FinalProject_2023.py
 Core Python script implementing the class hierarchy:
 
