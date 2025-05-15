@@ -16,10 +16,10 @@ RNA: Inherits from DNA and adds transcription/translation logic
 Protein: Inherits from Seq and calculates properties like hydrophobicity and molecular weight
 
 CHAN_PythonProject_2025.ipynb
-A Jupyter Notebook showcasing usage examples and test cases for the implemented classes, with formatted output and explanatory cells.
+A Jupyter Notebook showcasing usage examples and test cases for the implemented classes, with formatted output and explanatory cells. This uses CHAN_OOP_FinalProject_2023.py 
 
 CHAN_04A_Biopython_Tutorial_LSH-1.ipynb
-A Jupyter notebook exploring fundamental features of Biopython, focusing on biological sequence handling and Locality-Sensitive Hashing (LSH) techniques for efficient sequence similarity searches.
+A Jupyter notebook exploring fundamental features of Biopython, focusing on biological sequence handling and Locality-Sensitive Hashing (LSH) techniques for efficient sequence similarity searches. This also uses the KRAS dependencies.
 
 # Example
 CHAN_PythonProject_2025.ipynb
