@@ -18,5 +18,8 @@ Protein: Inherits from Seq and calculates properties like hydrophobicity and mol
 CHAN_PythonProject_2025.ipynb
 A Jupyter Notebook showcasing usage examples and test cases for the implemented classes, with formatted output and explanatory cells.
 
+CHAN_04A_Biopython_Tutorial_LSH-1.ipynb
+A Jupyter notebook exploring fundamental features of Biopython, focusing on biological sequence handling and Locality-Sensitive Hashing (LSH) techniques for efficient sequence similarity searches.
+
 # Example
 ![7CC4EB4C-9F01-4EC5-9F80-441F1B01C145](https://github.com/user-attachments/assets/fcfcce33-5872-4576-ba70-dfd67014337e)
